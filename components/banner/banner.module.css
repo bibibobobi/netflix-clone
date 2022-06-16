@@ -68,6 +68,7 @@
   line-height: 1.75rem /* 28px */;
   padding-left: 0.25rem /* 4px */;
   text-align: center;
+  padding-right: 14px;
 }
 
 .bannerImg {
