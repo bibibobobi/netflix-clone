@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import Image from 'next/image';
+import Banner from '../components/banner/banner';
 import styles from '../styles/Home.module.css';
 
 export default function Home() {
@@ -11,6 +12,14 @@ export default function Home() {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <h1>Netflix</h1>
+
+      <Banner
+        title='Ranking of kings'
+        subtitle="Prince Bojji's adventures"
+        imgUrl='/static/ranking_of_kings.jpeg'
+      />
+      {/* <NavBar />
+      <Card /> */}
     </div>
   );
 }
