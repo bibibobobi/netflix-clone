@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 const NavBar = (props) => {
   const { username } = props;
 
-  const [showDropDown, setShowDropDown] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const router = useRouter();
 
@@ -24,7 +24,7 @@ const NavBar = (props) => {
 
   const handleShowDropdown = (e) => {
     e.preventDefault();
-    setShowDropDown(!showDropDown);
+    setShowDropdown(!showDropdown);
   };
 
   return (
@@ -63,7 +63,7 @@ const NavBar = (props) => {
                 height='24'
               />
             </button>
-            {showDropDown && (
+            {showDropdown && (
               <div className={styles.navDropdown}>
                 <div>
                   <Link href='/login'>

@@ -2,6 +2,7 @@ import Head from 'next/head';
 
 import NavBar from '../components/nav/navbar';
 import Banner from '../components/banner/banner';
+import SectionCards from '../components/card/section-cards';
 import Card from '../components/card/card';
 import styles from '../styles/Home.module.css';
 
@@ -21,9 +22,7 @@ export default function Home() {
         imgUrl='/static/clifford.webp'
       />
 
-      <Card imgUrl='/static/ranking_of_kings.jpeg' size='large' />
-      <Card imgUrl='/static/ranking_of_kings.jpeg' size='medium' />
-      <Card imgUrl='/static/ranking_of_kings.jpeg' size='small' />
+      <SectionCards title='Disney' />
     </div>
   );
 }
