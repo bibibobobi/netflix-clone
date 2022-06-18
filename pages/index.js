@@ -7,6 +7,18 @@ import Card from '../components/card/card';
 import styles from '../styles/Home.module.css';
 
 export default function Home() {
+  const disneyVideos = [
+    {
+      imgUrl: '/static/ranking_of_kings.jpeg',
+    },
+    {
+      imgUrl: '/static/ranking_of_kings.jpeg',
+    },
+    {
+      imgUrl: '/static/ranking_of_kings.jpeg',
+    },
+  ];
+
   return (
     <div className={styles.container}>
       <Head>
@@ -21,8 +33,10 @@ export default function Home() {
         subtitle='a very cute dog'
         imgUrl='/static/clifford.webp'
       />
-
-      <SectionCards title='Disney' />
+      <div className={styles.sectionWrapper}>
+        <SectionCards title='Disney' videos={disneyVideos} size='large' />
+        <SectionCards title='Disney' videos={disneyVideos} size='medium' />
+      </div>
     </div>
   );
 }
