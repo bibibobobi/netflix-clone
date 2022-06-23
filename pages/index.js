@@ -3,22 +3,25 @@ import Head from 'next/head';
 import NavBar from '../components/nav/navbar';
 import Banner from '../components/banner/banner';
 import SectionCards from '../components/card/section-cards';
-import Card from '../components/card/card';
+
 import styles from '../styles/Home.module.css';
 
-export default function Home() {
-  const disneyVideos = [
-    {
-      imgUrl: '/static/ranking_of_kings.jpeg',
-    },
-    {
-      imgUrl: '/static/ranking_of_kings.jpeg',
-    },
-    {
-      imgUrl: '/static/ranking_of_kings.jpeg',
-    },
-  ];
+import { getVideos } from '../lib/videos';
 
+export async function getServerSideProps() {
+  const disneyVideos = await getVideos('disney trailer');
+  const documentaryVideos = await getVideos('documentary');
+  const ghibliVideos = await getVideos('ghibli trailer');
+  // const popularVideos = await getVideos('disney trailer');
+
+  return { props: { disneyVideos, documentaryVideos, ghibliVideos } };
+}
+
+export default function Home({
+  disneyVideos,
+  documentaryVideos,
+  ghibliVideos,
+}) {
   return (
     <div className={styles.container}>
       <Head>
@@ -35,7 +38,17 @@ export default function Home() {
       />
       <div className={styles.sectionWrapper}>
         <SectionCards title='Disney' videos={disneyVideos} size='large' />
-        <SectionCards title='Disney' videos={disneyVideos} size='medium' />
+        <SectionCards
+          title='Ghibli Studio'
+          videos={ghibliVideos}
+          size='small'
+        />
+        <SectionCards
+          title='Documentary'
+          videos={documentaryVideos}
+          size='medium'
+        />
+        <SectionCards title='Popular' videos={disneyVideos} size='small' />
       </div>
     </div>
   );
