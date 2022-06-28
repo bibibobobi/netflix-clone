@@ -7,13 +7,15 @@
 
 .title {
   color: var(--white10);
-  font-weight: 700;
+  font-weight: 500;
   font-size: 2rem;
+  font-family: sans-serif;
+  letter-spacing: 1.7px;
 }
 
 .cardWrapper {
   display: flex;
-  padding-top: 1.7rem;
+  /* padding-top: 1.7rem; */
   padding-bottom: 1.5rem;
   margin-top: 1.5rem /* 24px */;
   margin-right: 0.75rem /* 12px */;

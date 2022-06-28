@@ -10,7 +10,7 @@ import { getVideos, getPopularVideos } from '../lib/videos';
 
 export async function getServerSideProps() {
   const disneyVideos = await getVideos('disney trailer');
-  const documentaryVideos = await getVideos('documentary');
+  const documentaryVideos = await getVideos('friends clip');
   const ghibliVideos = await getVideos('ghibli trailer');
   const popularVideos = await getPopularVideos();
 
