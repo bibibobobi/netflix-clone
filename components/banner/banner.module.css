@@ -83,7 +83,9 @@
   --tw-gradient-from: var(--black);
 
   background-size: cover;
-  background-position: '50% 50%';
+  /* background-position: '50% 50%'; */
+  background-position: 65% 15%;
+  /* background-repeat: no-repeat; */
 }
 
 .btnWithIcon {

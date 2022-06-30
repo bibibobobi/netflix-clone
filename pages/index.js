@@ -36,9 +36,9 @@ export default function Home({
         <NavBar />
         <Banner
           videoId='l1uINfUshjc'
-          title='Clifford the red dog'
-          subtitle='a very cute dog'
-          imgUrl='/static/clifford.webp'
+          title='SPY × FAMILY'
+          subtitle='A spy adopts a cute child.'
+          imgUrl='/static/spy-x-family.jpg'
         />
         <div className={styles.sectionWrapper}>
           <SectionCards title='Disney' videos={disneyVideos} size='large' />
