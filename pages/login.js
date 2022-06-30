@@ -89,7 +89,7 @@ const Login = () => {
       </header>
       <main className={styles.main}>
         <div className={styles.mainWrapper}>
-          <h1 className={styles.signinHeader}>Sign In</h1>
+          <h1 className={styles.signinHeader}>Welcome</h1>
           <input
             type='text'
             placeholder='Email address'
@@ -98,7 +98,7 @@ const Login = () => {
           />
           <p className={styles.userMsg}>{userMsg}</p>
           <button onClick={handleLoginWithEmail} className={styles.loginBtn}>
-            {isLoading ? 'Loading...' : 'Sign In'}
+            {isLoading ? 'Loading...' : 'Log in / Sign up'}
           </button>
         </div>
       </main>

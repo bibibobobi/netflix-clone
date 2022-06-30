@@ -47,7 +47,7 @@ export default function Home({
             size='small'
           />
           <SectionCards
-            title='Documentary'
+            title='Your Favorite Series'
             videos={documentaryVideos}
             size='medium'
           />
