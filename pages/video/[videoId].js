@@ -4,21 +4,53 @@ import styles from '../../styles/Video.module.css';
 
 import cls from 'classnames';
 
+import { getYoutubeVideoById } from '../../lib/videos';
+
 Modal.setAppElement('#__next');
 
-const Video = () => {
+export async function getStaticProps() {
+  // data to fetch from API
+  // const video = {
+  //   title: 'SPY x FAMILY',
+  //   publishTime: '2022-06-01',
+  //   description:
+  //     'A spy, an assassin and a telepath come together to pose as a family, each for their own reasons, while hiding their true identities from each other.',
+  //   channelTitle: 'Netflix anime series',
+  //   viewCount: 20000,
+  // };
+
+  const videoId = 'l1uINfUshjc';
+
+  const videoArray = await getYoutubeVideoById(videoId);
+
+  return {
+    props: {
+      video: videoArray.length > 0 ? videoArray[0] : {},
+    },
+    revalidate: 10, // In seconds
+  };
+}
+
+export async function getStaticPaths() {
+  const listOfVideos = ['l1uINfUshjc', 'd4U1WcIM1E8', '1mhWzjgbLO0'];
+
+  const paths = listOfVideos.map((videoId) => ({
+    params: { videoId },
+  }));
+
+  return { paths, fallback: 'blocking' };
+}
+
+const Video = ({ video }) => {
   const router = useRouter();
 
-  const video = {
-    title: 'SPY x FAMILY',
-    publishTime: '2022-06-01',
-    description:
-      'A spy, an assassin and a telepath come together to pose as a family, each for their own reasons, while hiding their true identities from each other.A spy, an assassin and a telepath come together to pose as a family, each for their own reasons, while hiding their true identities from each other.A spy, an assassin and a telepath come together to pose as a family, each for their own reasons, while hiding their true identities from each other.A spy, an assassin and a telepath come together to pose as a family, each for their own reasons, while hiding their true identities from each other.A spy, an assassin and a telepath come together to pose as a family, each for their own reasons, while hiding their true identities from each other.A spy, an assassin and a telepath come together to pose as a family, each for their own reasons, while hiding their true identities from each other',
-    channelTitle: 'Netflix anime series',
-    viewCount: 20000,
-  };
-
-  const { title, publishTime, description, channelTitle, viewCount } = video;
+  const {
+    title,
+    publishTime,
+    description,
+    channelTitle,
+    statistics: { viewCount },
+  } = video;
 
   return (
     <div className={styles.container}>
