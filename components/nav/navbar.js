@@ -19,6 +19,8 @@ const NavBar = () => {
       // Assumes a user is already logged in
       try {
         const { email } = await magic.user.getMetadata();
+        const didToken = await magic.user.getIdToken();
+        console.log(didToken);
         if (email) {
           setUsername(email);
         }
