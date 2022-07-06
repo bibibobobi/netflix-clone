@@ -6,20 +6,21 @@ import {
 } from '../../lib/db/hasura';
 
 export default async function stats(req, res) {
-  if (req.method === 'POST') {
-    try {
-      const token = req.cookies.token;
-      if (!token) {
-        res.status(403).send({});
-      } else {
-        const { videoId, favorited, watched = true } = req.body;
+  try {
+    const token = req.cookies.token;
+    if (!token) {
+      res.status(403).send({});
+    } else {
+      const { videoId } = req.body;
 
-        if (videoId) {
-          const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+      if (videoId) {
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
 
-          const userId = decodedToken.issuer;
-          const findVideo = await findVideoIdByUser(token, userId, videoId);
-          const doesStatsExist = findVideo?.length > 0;
+        const userId = decodedToken.issuer;
+        const findVideo = await findVideoIdByUser(token, userId, videoId);
+        const doesStatsExist = findVideo?.length > 0;
+        if (req.method === 'POST') {
+          const { favorited, watched = true } = req.body;
           if (doesStatsExist) {
             // update it
             const response = await updateStats(token, {
@@ -39,38 +40,18 @@ export default async function stats(req, res) {
             });
             res.send({ data: response });
           }
-        }
-      }
-    } catch (error) {
-      console.log('Error occurred /stats', error);
-      res.status(500).send({ done: false, error: error?.message });
-    }
-  } else {
-    try {
-      const token = req.cookies.token;
-      if (!token) {
-        res.status(403).send({});
-      } else {
-        const { videoId } = req.body;
-
-        if (videoId) {
-          const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-
-          const userId = decodedToken.issuer;
-          const findVideo = await findVideoIdByUser(token, userId, videoId);
-          const doesStatsExist = findVideo?.length > 0;
+        } else {
           if (doesStatsExist) {
             res.send(findVideo);
           } else {
-            // add it
             res.status(404);
             res.send({ user: null, msg: 'Video not found' });
           }
         }
       }
-    } catch (error) {
-      console.log('Error occurred /stats', error);
-      res.status(500).send({ done: false, error: error?.message });
     }
+  } catch (error) {
+    console.log('Error occurred /stats', error);
+    res.status(500).send({ done: false, error: error?.message });
   }
 }
