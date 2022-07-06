@@ -38,6 +38,7 @@ export async function getStaticPaths() {
 
 const Video = ({ video }) => {
   const router = useRouter();
+  const videoId = router.query.videoId;
 
   const [toggleLike, setToggleLike] = useState(false);
   const [toggleDislike, setToggleDislike] = useState(false);
@@ -50,13 +51,40 @@ const Video = ({ video }) => {
     statistics: { viewCount } = { viewCount: 0 },
   } = video;
 
-  const handleToggleDislike = () => {
+  const runRatingService = async (favorited) => {
+    return await fetch('/api/stats', {
+      method: 'POST',
+      body: JSON.stringify({
+        videoId,
+        favorited,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  };
+
+  const handleToggleDislike = async () => {
+    console.log('handleToggleDislike');
     setToggleDislike(!toggleDislike);
     setToggleLike(toggleDislike);
+
+    const val = !toggleDislike;
+    const favorited = val ? 0 : 1;
+    const response = await runRatingService(favorited);
+    console.log('data', await response.json());
   };
-  const handleToggleLike = () => {
+
+  const handleToggleLike = async () => {
+    console.log('handleToggleLike');
     setToggleLike(!toggleLike);
     setToggleDislike(toggleLike);
+
+    const val = !toggleLike;
+    const favorited = val ? 1 : 0;
+    const response = await runRatingService(favorited);
+
+    console.log('data', await response.json());
   };
 
   return (
@@ -77,7 +105,7 @@ const Video = ({ video }) => {
           type='text/html'
           width='100%'
           height='390'
-          src={`http://www.youtube.com/embed/${router.query.videoId}?autoplay=1&controls=0&rel=0`}
+          src={`http://www.youtube.com/embed/${videoId}?autoplay=1&controls=0&rel=0`}
           frameBorder='0'
         ></iframe>
         <div className={styles.likeDislikeBtnWrapper}>
