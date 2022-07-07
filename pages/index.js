@@ -6,16 +6,32 @@ import SectionCards from '../components/card/section-cards';
 
 import styles from '../styles/Home.module.css';
 
-import { getVideos, getPopularVideos } from '../lib/videos';
+import {
+  getVideos,
+  getPopularVideos,
+  getWatchItAgainVideos,
+} from '../lib/videos';
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
+  const token = context.req ? context.req?.cookies.token : null;
+  console.log({ token });
+  const userId = 'did:ethr:0xB11F29037A7b7062179A3F186D2e11203Ba1dcE8';
+
+  const watchItAgainVideos = await getWatchItAgainVideos(userId, token);
+  console.log({ watchItAgainVideos });
   const disneyVideos = await getVideos('disney trailer');
   const documentaryVideos = await getVideos('friends clip');
   const ghibliVideos = await getVideos('ghibli trailer');
   const popularVideos = await getPopularVideos();
 
   return {
-    props: { disneyVideos, documentaryVideos, ghibliVideos, popularVideos },
+    props: {
+      disneyVideos,
+      documentaryVideos,
+      ghibliVideos,
+      popularVideos,
+      watchItAgainVideos,
+    },
   };
 }
 
@@ -24,6 +40,7 @@ export default function Home({
   documentaryVideos,
   ghibliVideos,
   popularVideos,
+  watchItAgainVideos,
 }) {
   return (
     <div className={styles.container}>
@@ -41,6 +58,11 @@ export default function Home({
           imgUrl='/static/spy-x-family.jpg'
         />
         <div className={styles.sectionWrapper}>
+          <SectionCards
+            title='Watch it again'
+            videos={watchItAgainVideos}
+            size='small'
+          />
           <SectionCards title='Disney' videos={disneyVideos} size='large' />
           <SectionCards
             title='Ghibli Studio'
