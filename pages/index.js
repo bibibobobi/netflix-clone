@@ -11,11 +11,21 @@ import {
   getPopularVideos,
   getWatchItAgainVideos,
 } from '../lib/videos';
+import { verifyToken } from '../lib/utils';
 
 export async function getServerSideProps(context) {
   const token = context.req ? context.req?.cookies.token : null;
-  console.log({ token });
-  const userId = 'did:ethr:0xB11F29037A7b7062179A3F186D2e11203Ba1dcE8';
+  const userId = await verifyToken(token);
+
+  if (!userId) {
+    return {
+      props: {},
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
 
   const watchItAgainVideos = await getWatchItAgainVideos(userId, token);
   console.log({ watchItAgainVideos });
@@ -40,7 +50,7 @@ export default function Home({
   documentaryVideos,
   ghibliVideos,
   popularVideos,
-  watchItAgainVideos,
+  watchItAgainVideos = [],
 }) {
   return (
     <div className={styles.container}>
