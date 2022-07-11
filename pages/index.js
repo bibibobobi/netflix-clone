@@ -11,11 +11,10 @@ import {
   getPopularVideos,
   getWatchItAgainVideos,
 } from '../lib/videos';
-import { verifyToken } from '../lib/utils';
+import { useRedirectUser } from '../utils/redirectUser';
 
 export async function getServerSideProps(context) {
-  const token = context.req ? context.req?.cookies.token : null;
-  const userId = await verifyToken(token);
+  const { userId, token } = await useRedirectUser(context);
 
   if (!userId) {
     return {
@@ -28,7 +27,7 @@ export async function getServerSideProps(context) {
   }
 
   const watchItAgainVideos = await getWatchItAgainVideos(userId, token);
-  console.log({ watchItAgainVideos });
+
   const disneyVideos = await getVideos('disney trailer');
   const documentaryVideos = await getVideos('friends clip');
   const ghibliVideos = await getVideos('ghibli trailer');
