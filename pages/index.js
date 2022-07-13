@@ -11,10 +11,10 @@ import {
   getPopularVideos,
   getWatchItAgainVideos,
 } from '../lib/videos';
-import { useRedirectUser } from '../utils/redirectUser';
+import { RedirectUser } from '../utils/redirectUser';
 
 export async function getServerSideProps(context) {
-  const { userId, token } = await useRedirectUser(context);
+  const { userId, token } = await RedirectUser(context);
 
   if (!userId) {
     return {
@@ -67,11 +67,14 @@ export default function Home({
           imgUrl='/static/spy-x-family.jpg'
         />
         <div className={styles.sectionWrapper}>
-          <SectionCards
-            title='Watch it again'
-            videos={watchItAgainVideos}
-            size='small'
-          />
+          {watchItAgainVideos.length > 0 && (
+            <SectionCards
+              title='Watch it again'
+              videos={watchItAgainVideos}
+              size='small'
+            />
+          )}
+
           <SectionCards title='Disney' videos={disneyVideos} size='large' />
           <SectionCards
             title='Ghibli Studio'
