@@ -9,7 +9,6 @@ const Banner = (props) => {
   const handleOnPlay = (e) => {
     e.preventDefault();
     router.push(`/video/${videoId}`);
-    console.log('handleOnPlay Clicked');
   };
 
   return (
